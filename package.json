@@ -1,0 +1,20 @@
+{
+  "name": "camunda_functions",
+  "version": "1.0.0",
+  "description": "Example Functions to use in camunda operate integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "Angel Alvarado, Enrique Motilla",
+  "license": "ISC",
+  "devDependencies": {
+    "jsdoc": "^3.6.6",
+    "jsdoc-to-markdown": "^7.0.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "zeebe-node": "^0.26.0"
+  }
+}
