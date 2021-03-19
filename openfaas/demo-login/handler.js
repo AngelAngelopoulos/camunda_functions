@@ -12,16 +12,7 @@ var result;
  */
 const credentials = {
     /** @name camundaCloud */
-    camundaCloud: {
-        /** 
-         * @name clientId Client code from the API menu in operate 
-         * @memberof camundaCloud
-        */
-        clientId: 'RlF6QuKtghwYFrOndVOv0eTHERDtkgFC',
-        clientSecret: 'l21M1N4VGz-9Akodg--4c40yZYKviWDO3jiAgXasv2LaWfC6K_01X2lhNgMLEY_i',
-        clusterId: 'e82e0015-8bfe-4714-9806-6147c3bbc6af',
-        cacheDir: './tokens'
-    }
+    
 };
 
 const zbc = new zb.ZBClient(credentials, { loglevel: 'INFO' })
@@ -102,7 +93,7 @@ const createWorkers = async(zbc) => {
         setTimeout(() => {
             console.log("Email enviado");
             complete.success({rs:true});
-          }, 5000);
+          }, 8000);
     })
 
     zbc.createWorker('worker-system-sms1', 'output-sms', (job,complete) => {
@@ -112,7 +103,7 @@ const createWorkers = async(zbc) => {
             console.log("SMS enviado");
         
             complete.success({rs:true});
-          }, 5000);  })
+          }, 8000);  })
 
     // DECLARATION OF ANY PROCESS:
     zbc.createWorker('worker-users-login','pr-login', (job,complete) => {
