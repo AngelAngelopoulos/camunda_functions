@@ -15,7 +15,11 @@ const credentials = {
     
 };
 
+/**
+ * 
+ */
 const zbc = new zb.ZBClient(credentials, { loglevel: 'INFO' })
+
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -57,6 +61,11 @@ function processLoginValidate(variables) {
     return result;
 }
 
+/**
+ * Function to identify that a job has been completed
+ * @param {*} id - ID of the key map
+ * @param {*} se_pudo - String to indicate whether the task is complete
+ */
 const hazalgo =  async(id, se_pudo = false) =>
 {
     //await new Promise(r => setTimeout(r, 2000));
@@ -68,10 +77,16 @@ const hazalgo =  async(id, se_pudo = false) =>
     console.log(`Trabajo ${id} completado`);
 }
 
-
+/**
+ * Creation of system workers
+ * @param {*} zbc 
+ */
 const createWorkers = async(zbc) => {
 
-    /** Worker dedicated to  */
+    /** 
+     * Worker dedicated to  authenticate user
+     * 
+    */
     zbc.createWorker('worker-system-log1', 'output-log', async (job,complete) => {
         const {key, variables} = job;
         console.log(`** Usuario ${variables.user} autenticado`);
@@ -79,7 +94,7 @@ const createWorkers = async(zbc) => {
     })
 
     /**
-     * This worker was created to write
+     * This worker was created to warn that the user could not authenticate
      */
     zbc.createWorker('worker-system-log2', 'output-log-detailed', (job,complete) => {
         const {key, variables} = job;
@@ -88,6 +103,9 @@ const createWorkers = async(zbc) => {
         complete.success({rs:true})
     })
 
+    /** 
+     * This worker was created to send emails to the administrator after a successful task
+     * * * * * */
     zbc.createWorker('worker-system-email1', 'output-email', (job,complete) => {
         console.log("** Enviando email al administrador...")
         setTimeout(() => {
@@ -96,6 +114,9 @@ const createWorkers = async(zbc) => {
           }, 8000);
     })
 
+    /**
+     * This worker was created to send SMS to the user after a successful task
+     */
     zbc.createWorker('worker-system-sms1', 'output-sms', (job,complete) => {
         const {key, variables} = job;
         console.log(`** Enviando SMS de autenticación al usuario ${variables.user}`)
@@ -128,7 +149,9 @@ const createWorkers = async(zbc) => {
 module.exports = async (context, callback) => {
 
     const method = context.method;
-
+    /**
+     * Only POST requests
+     */
     switch (method) {
         case 'POST':
             /**
